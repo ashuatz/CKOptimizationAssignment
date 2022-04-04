@@ -21,18 +21,6 @@
     <ClInclude Include="InventoryException.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="InventoryExceptionAlreadyFillled.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="InventoryExceptionEmptyIndex.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="InventoryExceptionOutOfRange.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Inventory.cpp">
