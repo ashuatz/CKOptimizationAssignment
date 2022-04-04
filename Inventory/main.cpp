@@ -10,6 +10,9 @@ decltype(auto) pauseAndAccess(Container&& c, Index i) {
 }
 
 int main(){
+	Inventory i;
+
+	i.AddItem(Item(1));
 }
 
 void pause() {
