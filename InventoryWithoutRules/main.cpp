@@ -17,7 +17,7 @@ decltype(auto) pauseAndAccess(Container&& c, Index i)
 
 int main()
 {
-	Inventory MyInventory = Inventory(100);
+	Inventory MyInventory = Inventory(1);
 
 	std::cout << "Add some items to MyInventory\n";
 	MyInventory.AddItem(EItemType::SomeItem_1);
@@ -35,23 +35,10 @@ int main()
 	std::cout << "MyInventory item list\n";
 	MyInventory.Print();
 
-	std::cout << "Copy MyInventory to CopiedInventroy\n";
-	Inventory CopiedInventory = MyInventory;
-
-	std::cout << "CopiedInventory item list\n";
-	CopiedInventory.Print();
-
-	std::cout << "Swap item 1 and 3 in CopiedInventory\n";
-	CopiedInventory.SwapItem(1, 3);
-
-	std::cout << "CopiedInventory item list\n";
-	CopiedInventory.Print();
+	std::cout << "Swap item 1 and 3 in MyInventory\n";
+	MyInventory.SwapItem(1, 3);
 
 	std::cout << "Test pauseAndAccess\n";
-	auto item = pauseAndAccess(CopiedInventory, 1);
+	auto item = pauseAndAccess(MyInventory, 1);
 	item.Print(0);
-
-	std::cout << "\nTest initializer list\n";
-	Inventory initializerInventory = Inventory{ Item(EItemType::SomeItem_1), Item(EItemType::SomeItem_3) };
-	initializerInventory.Print();
 }

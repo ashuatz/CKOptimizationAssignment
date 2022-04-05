@@ -5,7 +5,7 @@
 
 class InventoryException : public std::exception
 {
-public : 
+public:
 	InventoryException(const char* message) : std::exception(message) {}
 	virtual ~InventoryException() {}
 };
