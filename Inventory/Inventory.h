@@ -1,6 +1,7 @@
 #pragma once
 
-#include <initializer_list>
+#include <vector>
+#include <memory>
 
 #include "InventoryException.h"
 
@@ -14,61 +15,34 @@ struct Item{
 
 class Inventory{
 public:
+	using ItemList = std::vector<Item>;
+
+// Rule Of 0 Group Start
+// use std::unique_ptr -> deleted 1 ctor , operator= 
 	// ctor Group
 	Inventory() = default;
-	Inventory(int itemNum) : _ItemNum(itemNum){
-		_ItemList = new(std::nothrow) Item[itemNum];
-		for (int i = 0; i < _ItemNum; i++) _ItemList[i] = static_cast<Item>(NONE);
-	}
-	Inventory(const Inventory& copy) {
-		// 1
-		if (this == &copy) return;
-		if (_ItemList) delete[] _ItemList;
-
-		_ItemNum = copy._ItemNum;
-		_ItemList = new(std::nothrow) Item[_ItemNum];
-
-		for (int i = 0; i < _ItemNum; i++) _ItemList[i] = copy._ItemList[i];
-		// 2
-		// this.operator=(copy);
-	}
-	template<typename T>
-	Inventory(const std::initializer_list<T> itemindexlist) {
-		_ItemNum = itemindexlist.size();
-		_ItemList = new(std::nothrow) Item[_ItemNum];
-
-		int i = 0;
-		for (auto ItemIndex : itemindexlist) _ItemList[i++] = Item(ItemIndex);
-	}
+	Inventory(const Inventory&) = delete;
+	Inventory(Inventory&&) = default;
 
 	// dtor
-	~Inventory() {
-		delete[] _ItemList;
-	}
+	~Inventory() = default;
 
 	// Operator Overroding Group
-	const Inventory& operator=(const Inventory& rhs) {
-		if (this == &rhs) return *this;
-		if (_ItemList) delete[] _ItemList;
-
-		_ItemNum = rhs._ItemNum;
-		_ItemList = new(std::nothrow) Item[_ItemNum];
-
-		for (int i = 0; i < _ItemNum; i++) _ItemList[i] = rhs._ItemList[i];
-
-		return *this;
-	}
+	Inventory& operator=(const Inventory&) = delete;
+// Rule Of 0 Group End 
 	Item& operator[](const int index) {
-		return _ItemList[index];
+		if (index < 0 || index >= _ItemList->size())	throw IE_OutOfRange(index);
+
+		return _ItemList->at(index);
 	}
 
 	// Class Method Group
-	void AddItem(int, int);
+	void AddItem(Item);
 	void RemoveItem(int);
 	void SwapItem(int, int);
 
 private:
 	int _ItemNum = 0;
 
-	Item* _ItemList = nullptr;
+	 std::unique_ptr<ItemList> _ItemList = std::make_unique<ItemList>();
 };

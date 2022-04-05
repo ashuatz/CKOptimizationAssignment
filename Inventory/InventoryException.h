@@ -23,10 +23,10 @@ public:
 	IE_OutOfRange(int index) : InventoryException("InventoryException - OutOfRange", index) {}
 };
 
-class IE_InvalidItemIndex : public InventoryException {
+class IE_InvalidItemID : public InventoryException {
 public:
 	// ctor
-	IE_InvalidItemIndex(int index) : InventoryException("InventoryException - InvalidItemIndex", index) {}
+	IE_InvalidItemID(int index) : InventoryException("InventoryException - InvalidItemID", index) {}
 };
 
 class IE_AreadyFilledItem : public InventoryException {
