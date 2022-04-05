@@ -21,9 +21,6 @@
   <ItemGroup>
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="InventoryException.h" />
-    <ClInclude Include="InventoryExceptionAlreadyFillled.h" />
-    <ClInclude Include="InventoryExceptionEmptyIndex.h" />
-    <ClInclude Include="InventoryExceptionOutOfRange.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

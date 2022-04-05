@@ -1,7 +1,6 @@
 #include "Inventory.h"
-#include "InventoryExceptionAlreadyFillled.h"
-#include "InventoryExceptionOutOfRange.h"
-#include "InventoryExceptionEmptyIndex.h"
+#include "InventoryException.h"
+#include <utility>
 
 Inventory::Inventory(int itemNum) : mItemNum(itemNum)
 {
@@ -39,7 +38,7 @@ Item& Inventory::operator[](const int index)
 {
 	if (index < 0 || index >= mItemNum)
 	{
-		throw InventoryExceptionOutOfRange(index);
+		throw InventoryOutOfRangeException(index);
 	}
 
 	return mItems[index];
@@ -54,11 +53,11 @@ void Inventory::AddItem(int index, int itemID)
 {
 	if (index < 0 || index >= mItemNum)
 	{
-		throw InventoryExceptionOutOfRange(index);
+		throw InventoryOutOfRangeException(index);
 	}
 	if (mItems[index].id != -999)
 	{
-		throw InventoryExceptionAlreadyFillled(index);
+		throw InventoryAreadyFilledItemException(index);
 	}
 	mItems[index].id = itemID;
 }
@@ -67,11 +66,11 @@ void Inventory::RemoveItem(int index)
 {
 	if (index < 0 || index >= mItemNum)
 	{
-		throw InventoryExceptionOutOfRange(index);
+		throw InventoryOutOfRangeException(index);
 	}
 	if (mItems[index].id == -999)
 	{
-		throw InventoryExceptionEmptyIndex(index);
+		throw InventoryInvalidItemIndexException(index);
 	}
 
 	mItems[index].id = -999;
@@ -81,22 +80,24 @@ void Inventory::SwapItem(int target1, int target2)
 {
 	if ((target1 < 0 || target1 >= mItemNum))
 	{
-		throw InventoryExceptionOutOfRange(target1);
+		throw InventoryOutOfRangeException(target1);
 	}
 	if ((target2 < 0 || target2 >= mItemNum))
 	{
-		throw InventoryExceptionOutOfRange(target2);
+		throw InventoryOutOfRangeException(target2);
 	}
 	if (mItems[target1].id == -999)
 	{
-		throw InventoryExceptionEmptyIndex(target1);
+		throw InventoryInvalidItemIndexException(target1);
 	}
 	if (mItems[target2].id == -999)
 	{
-		throw InventoryExceptionEmptyIndex(target2);
+		throw InventoryInvalidItemIndexException(target2);
 	}
 	
-	int temp = mItems[target1].id;
-	mItems[target1].id = mItems[target2].id;
-	mItems[target2].id = temp;
+	std::swap(mItems[target1], mItems[target2]);
+	
+	//int temp = mItems[target1].id;
+	//mItems[target1].id = mItems[target2].id;
+	//mItems[target2].id = temp;
 }
